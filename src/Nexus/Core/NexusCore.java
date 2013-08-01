@@ -7,6 +7,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import Nexus.Config.ConfigurationManager;
+import Nexus.Listener.NexusEventListener;
 import Nexus.Util.Util;
 
 public class NexusCore extends JavaPlugin {
@@ -14,7 +15,7 @@ public class NexusCore extends JavaPlugin {
 	public Logger log;
 	public static NexusCore plugin;
 	public static String PluginName = "Nexus";
-	ConfigurationManager cfg;
+	public ConfigurationManager cfg;
 	private static ConfigurationManager msg;
 
 	public void onEnable() {
@@ -23,6 +24,7 @@ public class NexusCore extends JavaPlugin {
 		cfg = new ConfigurationManager(this);
 		msg = new ConfigurationManager(this, "messages.yml");
 		plugin.saveConfig();
+		this.getServer().getPluginManager().registerEvents(new NexusEventListener(), this);
 		this.log.info(PluginName + " has been enabled!");
 	}
 
@@ -40,7 +42,7 @@ public class NexusCore extends JavaPlugin {
 	 * @return メッセージ
 	 */
 	public String getMessage(String par1Key) {
-		return msg.getString(par1Key);
+		return msg.getString("en." + par1Key);
 	}
 
 	/**
@@ -66,6 +68,14 @@ public class NexusCore extends JavaPlugin {
 		}else{
 			plugin.log.info(Util.maskedStringReplace(par2String, null));
 		}
+	}
+	/**
+	 * サーバー一斉通知を行う
+	 * @param par1String 送信するメッセージ(カラーコード可)
+	 */
+	public static void broadCastMessage(
+			String par1String){
+			plugin.getServer().broadcastMessage(Util.maskedStringReplace(par1String, null));
 	}
 	/**
 	 * マスク付きメッセージの送信を行う
