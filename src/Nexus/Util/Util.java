@@ -57,7 +57,7 @@ public class Util {
 		if(par2Plugin.getServer().getPlayer(par1Player) == null) {
 			if(par3Sender != null){
 				String mode1 = Util.maskedStringReplace(
-						par2Plugin.getMessage("CFPlayer"),
+						par2Plugin.getMessage("en.error.CantFindPlayer"),
 				 new String[][]{
 					 {"%player", par1Player}
 				 });
@@ -90,9 +90,8 @@ public class Util {
 				&& !(par2Player.isOp())) {
 			if(hasMessage){
 				par2Player.sendMessage(par3Plugin.getPrefix() + Util.maskedStringReplace(
-						par3Plugin.getMessage("DontHavePermission"),
+						par3Plugin.getMessage("en.error.DontHavePerm"),
 						new String[][]{
-							{"%player", par2Player.getName()},
 							{"%perm", par1Perm}
 						}));
 			}
