@@ -15,19 +15,19 @@ import Nexus.Util.Util;
 
 public class FileSetConfiguration {
 	private final String FILE_NAME;
-	
+
 	private FileConfiguration resources;
-	
+
 	protected FileSetConfiguration Instance;
-	
+
 	NexusCore plugin;
-	
+
 	public FileSetConfiguration(NexusCore par1Plugin, String par2FileName){
 		plugin = par1Plugin;
 		FILE_NAME = par2FileName;
 		Instance = this;
 	}
-	
+
 	public void save(){
 		try {
 			resources.save(
@@ -38,9 +38,9 @@ public class FileSetConfiguration {
 		}
 		plugin.log.info("Saved Configuration.");
 	}
-	
+
 	private void initialize() {
-		
+
 		File file = new File(
 				plugin.getDataFolder() +
 				File.separator + FILE_NAME);
@@ -167,7 +167,7 @@ public class FileSetConfiguration {
 		if(resources == null){
 			initialize();
 		}
-		setLocation(par1Key, 
+		setLocation(par1Key,
 				par2Val.getX(),
 				par2Val.getY(),
 				par2Val.getZ(),
@@ -179,7 +179,7 @@ public class FileSetConfiguration {
 		if(resources == null){
 			initialize();
 		}
-		
+
 		setWorld(par1Key + ".world", World);
 		setDouble(par1Key + ".x", x);
 		setDouble(par1Key + ".y", y);
@@ -214,6 +214,7 @@ public class FileSetConfiguration {
 			initialize();
 		}
 		resources.set(par1Key, par2Val);
+		save();
 	}
 	public boolean isnull(String par1Key){
 		if(resources == null){
@@ -221,5 +222,5 @@ public class FileSetConfiguration {
 		}
 		return resources.get(par1Key) == null;
 	}
-	
+
 }

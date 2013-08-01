@@ -14,7 +14,7 @@ public class NexusEventListener implements Listener {
 		if(event.hasItem() && event.hasBlock() && event.getItem().getTypeId() == Material.STICK.getId()){
 			Location loc = event.getClickedBlock().getLocation();
 			NexusCore.plugin.cfg.setLocation("Nexus.NexusBlock", loc);
-			NexusCore.broadCastMessage(NexusCore.plugin.getMessage("Success.NexusPlace"));
+			NexusCore.broadCastMessage(NexusCore.plugin.getPrefix() + NexusCore.plugin.getMessage("success.NexusSet"));
 		}
 	}
 

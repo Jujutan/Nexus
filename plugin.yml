@@ -1,4 +1,4 @@
 name: Nexus PvP
-main: Nexus.NexusCore
+main: Nexus.Core.NexusCore
 version: 0.1
 authors: [squarep,Jun,Lunasys,TotoraJ,pabook]

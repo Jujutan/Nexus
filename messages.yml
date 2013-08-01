@@ -2,5 +2,5 @@ en:
   error:
     CantFindPlayer: 'Can''t Find Player : %player'
     DontHavePerm: 'You Don''t Have Permission. (%perm)'
-  Success:
+  success:
     NexusSet: 'Nexus Block Successfully Set.'

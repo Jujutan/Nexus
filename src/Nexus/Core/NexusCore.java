@@ -53,6 +53,7 @@ public class NexusCore extends JavaPlugin {
 		return Util.maskedStringReplace(cfg.getString("Prefix"),null);
 	}
 	public void onDisable() {
+		cfg.save();
 		this.log.info(PluginName + " has been disabled.");
 	}
 	/**
