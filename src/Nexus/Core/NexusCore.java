@@ -6,6 +6,7 @@ import java.util.logging.Logger;
 import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import Nexus.Commands.CommandNexus;
 import Nexus.Config.ConfigurationManager;
 import Nexus.Listener.NexusEventListener;
 import Nexus.Util.Util;
@@ -17,6 +18,7 @@ public class NexusCore extends JavaPlugin {
 	public static String PluginName = "Nexus";
 	public ConfigurationManager cfg;
 	private static ConfigurationManager msg;
+	public static boolean isNexusSetmode;
 
 	public void onEnable() {
 		plugin = this;
@@ -25,6 +27,7 @@ public class NexusCore extends JavaPlugin {
 		msg = new ConfigurationManager(this, "messages.yml");
 		plugin.saveConfig();
 		this.getServer().getPluginManager().registerEvents(new NexusEventListener(), this);
+		this.getCommand("nexus").setExecutor(new CommandNexus());
 		this.log.info(PluginName + " has been enabled!");
 	}
 
