@@ -15,8 +15,8 @@ public class NexusEventListener implements Listener {
 				event.hasItem() && event.hasBlock() &&
 				event.getItem().getTypeId() == Material.STICK.getId()){
 			Location loc = event.getClickedBlock().getLocation();
-			NexusCore.plugin.cfg.setLocation("Nexus.NexusBlock", loc);
-			NexusCore.broadCastMessage(NexusCore.plugin.getPrefix() +
+			NexusCore.cfg.setLocation("Nexus.NexusBlock", loc);
+			NexusCore.broadCastMessage(NexusCore.getPrefix() +
 					NexusCore.plugin.getMessage("success.NexusSet"));
 			event.setCancelled(true);
 			NexusCore.isNexusSetmode = false;

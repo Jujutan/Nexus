@@ -16,9 +16,10 @@ public class NexusCore extends JavaPlugin {
 	public Logger log;
 	public static NexusCore plugin;
 	public static String PluginName = "Nexus";
-	public ConfigurationManager cfg;
+	public static ConfigurationManager cfg;
 	private static ConfigurationManager msg;
 	public static boolean isNexusSetmode;
+	public static String[] TeamList;
 
 	public void onEnable() {
 		plugin = this;
@@ -26,6 +27,7 @@ public class NexusCore extends JavaPlugin {
 		cfg = new ConfigurationManager(this);
 		msg = new ConfigurationManager(this, "messages.yml");
 		plugin.saveConfig();
+		TeamList = cfg.getStringList("Teams").toArray(TeamList);
 		this.getServer().getPluginManager().registerEvents(new NexusEventListener(), this);
 		this.getCommand("nexus").setExecutor(new CommandNexus());
 		this.log.info(PluginName + " has been enabled!");
@@ -52,11 +54,10 @@ public class NexusCore extends JavaPlugin {
 	 * コマンドのPrefixを返す
 	 * @return PrefixをマスキングリプレースしたString
 	 */
-	public String getPrefix(){
+	public static String getPrefix(){
 		return Util.maskedStringReplace(cfg.getString("Prefix"),null);
 	}
 	public void onDisable() {
-		cfg.save();
 		this.log.info(PluginName + " has been disabled.");
 	}
 	/**

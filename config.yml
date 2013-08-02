@@ -1,1 +1,5 @@
 Prefix: '&c[Nexus]&f' 
+DefaultHP: 200
+Teams:
+   - 'A Team'
+   - '&cB Team'

@@ -3,4 +3,5 @@ en:
     CantFindPlayer: 'Can''t Find Player : %player'
     DontHavePerm: 'You Don''t Have Permission. (%perm)'
   success:
+    NexusSetPrepare: 'Please click Block the Stick'
     NexusSet: 'Nexus Block Successfully Set.'

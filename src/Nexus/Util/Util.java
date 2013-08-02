@@ -61,7 +61,7 @@ public class Util {
 				 new String[][]{
 					 {"%player", par1Player}
 				 });
-				par3Sender.sendMessage(par2Plugin.getPrefix() + mode1);
+				par3Sender.sendMessage(NexusCore.getPrefix() + mode1);
 			}
 			return null;
 		}
@@ -89,7 +89,7 @@ public class Util {
 		if(!(par2Player.hasPermission(par1Perm))
 				&& !(par2Player.isOp())) {
 			if(hasMessage){
-				par2Player.sendMessage(par3Plugin.getPrefix() + Util.maskedStringReplace(
+				par2Player.sendMessage(NexusCore.getPrefix() + Util.maskedStringReplace(
 						par3Plugin.getMessage("error.DontHavePerm"),
 						new String[][]{
 							{"%perm", par1Perm}
