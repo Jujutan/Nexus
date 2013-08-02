@@ -1,6 +1,7 @@
 package Nexus.Core;
 
 import java.io.File;
+import java.util.List;
 import java.util.logging.Logger;
 
 import org.bukkit.command.CommandSender;
@@ -19,15 +20,19 @@ public class NexusCore extends JavaPlugin {
 	public static ConfigurationManager cfg;
 	private static ConfigurationManager msg;
 	public static boolean isNexusSetmode;
-	public static String[] TeamList;
+	public static List<String> TeamList;
+	private static NexusTeamManager manager;
 
 	public void onEnable() {
 		plugin = this;
 		this.log = this.getLogger();
+		manager = new NexusTeamManager();
 		cfg = new ConfigurationManager(this);
+		TeamList = cfg.getStringList("Teams");
 		msg = new ConfigurationManager(this, "messages.yml");
-		plugin.saveConfig();
-		TeamList = cfg.getStringList("Teams").toArray(TeamList);
+		cfg.save();
+		msg.save();
+		initNexusTeam();
 		this.getServer().getPluginManager().registerEvents(new NexusEventListener(), this);
 		this.getCommand("nexus").setExecutor(new CommandNexus());
 		this.log.info(PluginName + " has been enabled!");
@@ -100,5 +105,9 @@ public class NexusCore extends JavaPlugin {
 	 */
 	public ConfigurationManager getcfg(){
 		return cfg;
+	}
+
+	protected void initNexusTeam(){
+		for()
 	}
 }
