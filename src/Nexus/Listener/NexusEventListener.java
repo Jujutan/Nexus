@@ -11,10 +11,15 @@ import Nexus.Core.NexusCore;
 public class NexusEventListener implements Listener {
 	@EventHandler
 	public void onNexusBlockSet(PlayerInteractEvent event){
-		if(event.hasItem() && event.hasBlock() && event.getItem().getTypeId() == Material.STICK.getId()){
+		if( NexusCore.isNexusSetmode &&
+				event.hasItem() && event.hasBlock() &&
+				event.getItem().getTypeId() == Material.STICK.getId()){
 			Location loc = event.getClickedBlock().getLocation();
 			NexusCore.plugin.cfg.setLocation("Nexus.NexusBlock", loc);
-			NexusCore.broadCastMessage(NexusCore.plugin.getPrefix() + NexusCore.plugin.getMessage("success.NexusSet"));
+			NexusCore.broadCastMessage(NexusCore.plugin.getPrefix() +
+					NexusCore.plugin.getMessage("success.NexusSet"));
+			event.setCancelled(true);
+			NexusCore.isNexusSetmode = false;
 		}
 	}
 
