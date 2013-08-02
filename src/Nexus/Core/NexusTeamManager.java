@@ -33,6 +33,27 @@ public class NexusTeamManager {
 	public void addPlayer(int TeamID, Player player){
 		Players.get(TeamID).add(player);
 	}
+	public String getTeamName(String par1Str){
+		return NexusCore.Team.getString(par1Str + ".name");
+	}
+	public String[] getTeams(){
+		return TeamMap.values().toArray(new String[]{});
+	}
+	public String getTeam(Player player){
+		for(int i = 0; i < Players.size(); i++){
+			if(Players.get(i).contains(player)){
+				return TeamMap.get(i);
+			}
+		}
+		return null;
+	}
+	public boolean containTeam(String par1Str){
+		for(int i = 0; i < TeamMap.size(); i++){
+			if(TeamMap.get(i).contains(par1Str))
+				return true;
+		}
+		return false;
+	}
 	public void clear(){
 		HPMap.clear();
 		NexusMap.clear();

@@ -39,7 +39,7 @@ public class FileSetConfiguration {
 		plugin.log.info("Saved Configuration.");
 	}
 
-	private void initialize() {
+	public void initialize() {
 
 		File file = new File(
 				plugin.getDataFolder() +

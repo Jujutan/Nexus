@@ -57,7 +57,7 @@ public class Util {
 		if(par2Plugin.getServer().getPlayer(par1Player) == null) {
 			if(par3Sender != null){
 				String mode1 = Util.maskedStringReplace(
-						par2Plugin.getMessage("error.CantFindPlayer"),
+						NexusCore.getMessage("error.CantFindPlayer"),
 				 new String[][]{
 					 {"%player", par1Player}
 				 });
@@ -90,7 +90,7 @@ public class Util {
 				&& !(par2Player.isOp())) {
 			if(hasMessage){
 				par2Player.sendMessage(NexusCore.getPrefix() + Util.maskedStringReplace(
-						par3Plugin.getMessage("error.DontHavePerm"),
+						NexusCore.getMessage("error.DontHavePerm"),
 						new String[][]{
 							{"%perm", par1Perm}
 						}));

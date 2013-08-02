@@ -6,6 +6,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEvent;
 
+import Nexus.Commands.CommandNexus;
 import Nexus.Core.NexusCore;
 
 public class NexusEventListener implements Listener {
@@ -15,9 +16,9 @@ public class NexusEventListener implements Listener {
 				event.hasItem() && event.hasBlock() &&
 				event.getItem().getTypeId() == Material.STICK.getId()){
 			Location loc = event.getClickedBlock().getLocation();
-			NexusCore.cfg.setLocation("Nexus.NexusBlock", loc);
-			NexusCore.broadCastMessage(NexusCore.getPrefix() +
-					NexusCore.plugin.getMessage("success.NexusSet"));
+			NexusCore.Team.setLocation("NexusBlock." +
+					NexusCore.Team.getString(CommandNexus.Team + ".name"), loc);
+			NexusCore.broadCastMessage(NexusCore.getMessage("success.NexusSet"));
 			event.setCancelled(true);
 			NexusCore.isNexusSetmode = false;
 		}

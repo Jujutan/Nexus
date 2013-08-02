@@ -19,6 +19,7 @@ public class NexusCore extends JavaPlugin {
 	public static String PluginName = "Nexus";
 	public static ConfigurationManager cfg;
 	private static ConfigurationManager msg;
+	public static ConfigurationManager Team;
 	public static boolean isNexusSetmode;
 	public static List<String> TeamList;
 	private static NexusTeamManager manager;
@@ -30,8 +31,12 @@ public class NexusCore extends JavaPlugin {
 		cfg = new ConfigurationManager(this);
 		TeamList = cfg.getStringList("Teams");
 		msg = new ConfigurationManager(this, "messages.yml");
+		msg.isnull("Initialize");
+		Team = new ConfigurationManager(this, "Team.yml");
+		Team.isnull("Initialize");
 		cfg.save();
 		msg.save();
+		Team.save();
 		initNexusTeam();
 		this.getServer().getPluginManager().registerEvents(new NexusEventListener(), this);
 		this.getCommand("nexus").setExecutor(new CommandNexus());
@@ -51,7 +56,7 @@ public class NexusCore extends JavaPlugin {
 	 * @param par1Key コンフィグのキー
 	 * @return メッセージ
 	 */
-	public String getMessage(String par1Key) {
+	public static String getMessage(String par1Key) {
 		return msg.getString("en." + par1Key);
 	}
 
@@ -63,6 +68,7 @@ public class NexusCore extends JavaPlugin {
 		return Util.maskedStringReplace(cfg.getString("Prefix"),null);
 	}
 	public void onDisable() {
+		manager.clear();
 		this.log.info(PluginName + " has been disabled.");
 	}
 	/**
@@ -74,9 +80,9 @@ public class NexusCore extends JavaPlugin {
 			CommandSender par1Sender,
 			String par2String){
 		if(par1Sender != null){
-			par1Sender.sendMessage(Util.maskedStringReplace(par2String, null));
+			par1Sender.sendMessage(getPrefix() + Util.maskedStringReplace(par2String, null));
 		}else{
-			plugin.log.info(Util.maskedStringReplace(par2String, null));
+			plugin.log.info(getPrefix() + Util.maskedStringReplace(par2String, null));
 		}
 	}
 	/**
@@ -85,7 +91,11 @@ public class NexusCore extends JavaPlugin {
 	 */
 	public static void broadCastMessage(
 			String par1String){
-			plugin.getServer().broadcastMessage(Util.maskedStringReplace(par1String, null));
+			broadCastMessage(par1String, null);
+	}
+	public static void broadCastMessage(
+			String par1String, String[][] Args){
+			plugin.getServer().broadcastMessage(getPrefix() + Util.maskedStringReplace(par1String, Args));
 	}
 	/**
 	 * マスク付きメッセージの送信を行う
@@ -108,6 +118,17 @@ public class NexusCore extends JavaPlugin {
 	}
 
 	protected void initNexusTeam(){
-		for()
+		for(int i = 0; i < TeamList.size(); i++){
+			manager.addTeam(i, TeamList.get(i));
+		}
+	}
+	public static NexusTeamManager getTeamManager(){
+		return manager;
+	}
+
+	public static void initCfg() {
+		cfg.initialize();
+		msg.initialize();
+		Team.initialize();
 	}
 }
