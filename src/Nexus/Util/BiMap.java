@@ -1,5 +1,6 @@
 package Nexus.Util;
 
+import java.io.Serializable;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -8,8 +9,7 @@ import java.util.LinkedList;
 import java.util.Map;
 import java.util.Set;
 
-
-public  class BiMap<K, V> implements Map<K,V>{
+public  class BiMap<K, V> implements Map<K,V>, Serializable{
 	HashMap<K,V> map;
 	LinkedList<EntrySet<K,V>> entrys;
 	public BiMap(){
@@ -17,11 +17,13 @@ public  class BiMap<K, V> implements Map<K,V>{
 		entrys = new LinkedList<EntrySet<K,V>>();
 	}
 
-	@SuppressWarnings({ "rawtypes" })
 	public BiMap<V,K> inverse(){
 		BiMap<V,K> var1 = new BiMap<V,K>();
-		for(EntrySet t : entrys.toArray(new EntrySet[]{})){
-			var1.addEntrySet(t.inverse());
+		Iterator<EntrySet<K,V>> i = entrys.iterator();
+		EntrySet<K,V> var2;
+		while(i.hasNext()){
+			var2 = i.next();
+			var1.put(var2.getVal(), var2.getKey());
 		}
 		return var1;
 	}
@@ -98,22 +100,22 @@ public  class BiMap<K, V> implements Map<K,V>{
 		entrys.clear();
 	}
 
-	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override
 	public Set<K> keySet() {
 		Set<K> var1 = new HashSet<K>();
-		for(EntrySet t : this.entrys){
-			var1.add((K) t.getKey());
+		Iterator<EntrySet<K,V>> i = this.entrys.iterator();
+		while(i.hasNext()){
+			var1.add(i.next().getKey());
 		}
 		return var1;
 	}
 
-	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Override
 	public Collection<V> values() {
 		LinkedList<V> var1 = new LinkedList<V>();
-		for(EntrySet t : this.entrys){
-			var1.add((V) t.getVal());
+		Iterator<EntrySet<K,V>> i = this.entrys.iterator();
+		while(i.hasNext()){
+			var1.add(i.next().getVal());
 		}
 		return var1;
 	}
@@ -123,11 +125,7 @@ public  class BiMap<K, V> implements Map<K,V>{
 		throw new UnsupportedOperationException();
 	}
 
-	@SuppressWarnings({ "rawtypes", "unchecked" })
-	private void addEntrySet(EntrySet entry){
-		this.entrys.add(entry);
-	}
-	@SuppressWarnings({ "unused", "hiding" })
+	@SuppressWarnings("hiding")
 	private class EntrySet<K,V>{
 		private K key;
 		private V val;
@@ -135,6 +133,7 @@ public  class BiMap<K, V> implements Map<K,V>{
 			this.setKey(par1Key);
 			this.setVal(par2Val);
 		}
+		@SuppressWarnings("unused")
 		public EntrySet() {
 			this(null,null);
 		}
@@ -149,10 +148,6 @@ public  class BiMap<K, V> implements Map<K,V>{
 		}
 		public void setVal(V val) {
 			this.val = val;
-		}
-
-		public EntrySet<V,K> inverse(){
-			return new EntrySet<V,K>(this.val,this.key);
 		}
 	}
 }
