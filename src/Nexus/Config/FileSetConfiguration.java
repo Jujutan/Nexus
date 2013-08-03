@@ -29,10 +29,9 @@ public class FileSetConfiguration {
 	}
 
 	public void save(){
+		initialize();
 		try {
-			resources.save(
-					plugin.getDataFolder() +
-					File.separator + FILE_NAME);
+			resources.save(plugin.getDataFolder() + File.separator + FILE_NAME);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -40,21 +39,24 @@ public class FileSetConfiguration {
 	}
 
 	public void initialize() {
-
+		initialize(false);
+	}
+	public void initialize(boolean isForce) {
+		if(resources != null){
+			return;
+		}
 		File file = new File(
 				plugin.getDataFolder() +
 				File.separator + FILE_NAME);
 
-		if ( !file.exists() ) {
+		if ( !file.exists() || isForce) {
 			Util.copyFileFromJar(plugin.getPluginJarFile(),
 					file, FILE_NAME, false);
 		}
 		resources = YamlConfiguration.loadConfiguration(file);
 	}
 	public String getString(String par1Key){
-		if(resources == null){
-			initialize();
-		}
+		initialize();
 		if(!isnull(par1Key)){
 			return resources.getString(par1Key);
 		}else{
@@ -62,15 +64,11 @@ public class FileSetConfiguration {
 		}
 	}
 	public void setString(String par1Path, String par2Val){
-		if(resources == null){
-			initialize();
-		}
+		initialize();
 		set(par1Path, par2Val);
 	}
 	public Integer getInteger(String par1Key){
-		if(resources == null){
-			initialize();
-		}
+		initialize();
 		if(!isnull(par1Key)){
 			return resources.getInt(par1Key);
 		}else{
@@ -78,15 +76,11 @@ public class FileSetConfiguration {
 		}
 	}
 	public void setInteger(String par1Key, Integer par2Val){
-		if(resources == null){
-			initialize();
-		}
+		initialize();
 		set(par1Key, par2Val);
 	}
 	public Double getDouble(String par1Key){
-		if(resources == null){
-			initialize();
-		}
+		initialize();
 		if(!isnull(par1Key)){
 			return resources.getDouble(par1Key);
 		}else{
@@ -94,15 +88,11 @@ public class FileSetConfiguration {
 		}
 	}
 	public void setDouble(String par1Key, Double par2Val){
-		if(resources == null){
-			initialize();
-		}
+		initialize();
 		set(par1Key, par2Val);
 	}
 	public Boolean getBoolean(String par1Key){
-		if(resources == null){
-			initialize();
-		}
+		initialize();
 		if(!isnull(par1Key)){
 			return resources.getBoolean(par1Key);
 		}else{
@@ -110,15 +100,11 @@ public class FileSetConfiguration {
 		}
 	}
 	public void setBoolean(String par1Path, boolean par2Val){
-		if(resources == null){
-			initialize();
-		}
+		initialize();
 		set(par1Path, par2Val);
 	}
 	public List<?> getList(String par1Key){
-		if(resources == null){
-			initialize();
-		}
+		initialize();
 		if(!isnull(par1Key)){
 			return resources.getList(par1Key);
 		}else{
@@ -126,15 +112,11 @@ public class FileSetConfiguration {
 		}
 	}
 	public void setList(String par1Key, List<?> par2Val){
-		if(resources == null){
-			initialize();
-		}
+		initialize();
 		set(par1Key, par2Val);
 	}
 	public List<String> getStringList(String par1Key){
-		if(resources == null){
-			initialize();
-		}
+		initialize();
 		if(!isnull(par1Key)){
 			return resources.getStringList(par1Key);
 		}else{
@@ -142,15 +124,11 @@ public class FileSetConfiguration {
 		}
 	}
 	public void setStringList(String par1Key, List<String> par2Val){
-		if(resources == null){
-			initialize();
-		}
+		initialize();
 		set(par1Key, par2Val);
 	}
 	public Location getLocation(String par1Key){
-		if(resources == null){
-			initialize();
-		}
+		initialize();
 		if(!isnull(par1Key)){
 			return new Location(
 					getWorld(par1Key + ".world"),
@@ -164,9 +142,7 @@ public class FileSetConfiguration {
 		}
 	}
 	public void setLocation(String par1Key, Location par2Val){
-		if(resources == null){
-			initialize();
-		}
+		initialize();
 		setLocation(par1Key,
 				par2Val.getX(),
 				par2Val.getY(),
@@ -176,9 +152,7 @@ public class FileSetConfiguration {
 	}
 	public void setLocation(String par1Key, Double x, Double y,
 					Double z, World World){
-		if(resources == null){
-			initialize();
-		}
+		initialize();
 
 		setWorld(par1Key + ".world", World);
 		setDouble(par1Key + ".x", x);
@@ -187,9 +161,7 @@ public class FileSetConfiguration {
 	}
 
 	public World getWorld(String par1Key) {
-		if(resources == null){
-			initialize();
-		}
+		initialize();
 		if(!isnull(par1Key)){
 			return plugin.getServer().getWorld(getString(par1Key));
 		}else{
@@ -197,29 +169,21 @@ public class FileSetConfiguration {
 		}
 	}
 	public void setWorld(String par1Key, World par2Val) {
-		if(resources == null){
-			initialize();
-		}
+		initialize();
 		set(par1Key, par2Val.getName());
 	}
 
 	public void addDefault(String par1Key, Object par2Obj){
-		if(resources == null){
-			initialize();
-		}
+		initialize();
 		resources.addDefault(par1Key, par2Obj);
 	}
 	public void set(String par1Key, Object par2Val){
-		if(resources == null){
-			initialize();
-		}
+		initialize();
 		resources.set(par1Key, par2Val);
 		save();
 	}
 	public boolean isnull(String par1Key){
-		if(resources == null){
-			initialize();
-		}
+		initialize();
 		return resources.get(par1Key) == null;
 	}
 

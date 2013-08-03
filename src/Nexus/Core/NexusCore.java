@@ -34,9 +34,6 @@ public class NexusCore extends JavaPlugin {
 		msg.isnull("Initialize");
 		Team = new ConfigurationManager(this, "Team.yml");
 		Team.isnull("Initialize");
-		cfg.save();
-		msg.save();
-		Team.save();
 		initNexusTeam();
 		this.getServer().getPluginManager().registerEvents(new NexusEventListener(), this);
 		this.getCommand("nexus").setExecutor(new CommandNexus());
@@ -68,7 +65,10 @@ public class NexusCore extends JavaPlugin {
 		return Util.maskedStringReplace(cfg.getString("Prefix"),null);
 	}
 	public void onDisable() {
-		manager.clear();
+		//manager.clear();
+		cfg.save();
+		msg.save();
+		Team.save();
 		this.log.info(PluginName + " has been disabled.");
 	}
 	/**
@@ -95,7 +95,8 @@ public class NexusCore extends JavaPlugin {
 	}
 	public static void broadCastMessage(
 			String par1String, String[][] Args){
-			plugin.getServer().broadcastMessage(getPrefix() + Util.maskedStringReplace(par1String, Args));
+			plugin.getServer().broadcastMessage(getPrefix() +
+					Util.maskedStringReplace(par1String, Args));
 	}
 	/**
 	 * マスク付きメッセージの送信を行う

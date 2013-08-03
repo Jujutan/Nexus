@@ -1,7 +1,7 @@
 package Nexus.Core;
 
+import java.util.Iterator;
 import java.util.LinkedList;
-import java.util.Map;
 
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -9,14 +9,16 @@ import org.bukkit.entity.Player;
 import Nexus.Util.BiMap;
 
 public class NexusTeamManager {
-	private Map<Integer, Integer> HPMap = new BiMap<Integer, Integer>();
-	private Map<Integer, Location> NexusMap = new BiMap<Integer, Location>();
-	private Map<Integer, String> TeamMap = new BiMap<Integer, String>();
-	private Map<Integer, LinkedList<Player>> Players = new BiMap<Integer, LinkedList<Player>>();
+	private BiMap<Integer, Integer> HPMap = new BiMap<Integer, Integer>();
+	private BiMap<Integer, Location> NexusMap = new BiMap<Integer, Location>();
+	private BiMap<Integer, String> TeamMap = new BiMap<Integer, String>();
+	private BiMap<Integer, LinkedList<Player>> Players = new BiMap<Integer, LinkedList<Player>>();
 	public void updateHPBar(){
+		Iterator<Player> it;
 		for(int i = 0; i < TeamMap.size(); i++){
-			for(Player t : Players.get(TeamMap.keySet().toArray()[i])){
-				t.setExp(HPMap.get(i));
+			it = Players.get(i).iterator();
+			while(it.hasNext()){
+				it.next().setExp(HPMap.get(i) / 0.005F);
 			}
 		}
 	}
@@ -38,7 +40,10 @@ public class NexusTeamManager {
 		return NexusCore.Team.getString(par1Str + ".name");
 	}
 	public String[] getTeams(){
-		return TeamMap.values().toArray(new String[]{});
+		return TeamMap.values().toArray(new String[TeamMap.size()]);
+	}
+	public String getTeamName(Player player){
+		return TeamMap.get(getTeamID(player));
 	}
 	public int getTeamID(String par1Team){
 		for(int i = 0; i < TeamMap.size(); i++){
@@ -47,18 +52,20 @@ public class NexusTeamManager {
 		}
 		return -1;
 	}
-	public String getTeam(Player player){
+	public int getTeamID(Player player){
 		for(int i = 0; i < Players.size(); i++){
 			if(Players.get(i).contains(player)){
-				return TeamMap.get(i);
+				return i;
 			}
 		}
-		return null;
+		return -1;
 	}
 	public boolean containTeam(String par1Str){
-		for(int i = 0; i < TeamMap.size(); i++){
-			if(TeamMap.get(i).contains(par1Str))
+		Iterator<String> i = TeamMap.values().iterator();
+		while(i.hasNext()){
+			if(i.next().equals(par1Str)){
 				return true;
+			}
 		}
 		return false;
 	}
